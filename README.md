@@ -2,7 +2,7 @@
 
 This example app shows how to use Vanilla JavaScript to build an app and add authentication with Okta.
 
-Please read [Add Authentication to Your Vanilla JavaScript App in 20 Minutes]() to see how this app was created.
+Please read [Add Authentication to Your Vanilla JavaScript App in 20 Minutes](https://developer.okta.com/blog/2018/06/05/authentication-vanilla-js) to see how this app was created.
 
 **Prerequisites:** [Node.js](https://nodejs.org/).
 
@@ -77,7 +77,7 @@ This example uses the following libraries provided by Okta:
 
 ## Help
 
-Please post any questions as comments on the [blog post](), or visit our [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if would like to create a support ticket.
+Please post any questions as comments on the [blog post](https://developer.okta.com/blog/2018/06/05/authentication-vanilla-js), or visit our [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if would like to create a support ticket.
 
 ## License
 
