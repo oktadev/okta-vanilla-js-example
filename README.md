@@ -22,11 +22,10 @@ git clone https://github.com/oktadeveloper/okta-vanilla-js-example.git
 cd okta-vanilla-js-example
 ```
 
-This will get a copy of the project installed locally. To install all of its dependencies and start each app, follow the instructions below.
-
-To run the app:
+This will get a copy of the project installed locally. To install all of its dependencies and start the app, follow the instructions below.
  
 ```bash
+npm install
 node .
 ```
 
@@ -48,15 +47,16 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 
 #### Client Configuration
 
-For the client, set the `baseUrl` and copy the `clientId` into `public/main.js`.
+For the client, set the `baseUrl`, `clientId`, and `authParams.issuer` in `public/main.js`.
 
 ```js
 this.signIn = new OktaSignIn({
-  baseUrl: 'https://{YOUR_OKTA_DOMAIN}',
-  clientId: '{YOUR_CLIENT_ID}',
+  baseUrl: 'https://{yourOktaDomain}',
+  clientId: '{clientId}',
   redirectUri: 'http://localhost:8080',
   authParams: {
-    issuer: 'default',
+    issuer: 'https://{yourOktaDomain}/oauth2/default',
+    pkce: false,
     responseType: ['id_token','token']
   },
   logo: '//placehold.it/200x40?text=Your+Logo',
