@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const OktaJwtVerifier = require('@okta/jwt-verifier')
 
 const oktaJwtVerifier = new OktaJwtVerifier({
-  issuer: 'https://{YOUR_OKTA_DOMAIN}/oauth2/default'
+  issuer: 'https://{yourOktaDomain}/oauth2/default'
 })
 
 const authenticationRequired = (req, res, next) => {
@@ -12,7 +12,7 @@ const authenticationRequired = (req, res, next) => {
   }
   let parts = req.headers.authorization.trim().split(' ')
   let accessToken = parts.pop()
-  oktaJwtVerifier.verifyAccessToken(accessToken)
+  oktaJwtVerifier.verifyAccessToken(accessToken, 'api://default')
     .then(jwt => {
       req.user = {
         uid: jwt.claims.uid,
