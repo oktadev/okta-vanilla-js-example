@@ -20,11 +20,9 @@ class App {
     this.signIn = new OktaSignIn({
       baseUrl: 'https://{yourOktaDomain}',
       clientId: '{clientId}',
-      redirectUri: 'http://localhost:8080',
+      redirectUri: window.location.origin,
       authParams: {
         issuer: 'https://{yourOktaDomain}/oauth2/default',
-        pkce: false,
-        responseType: ['id_token','token']
       },
       logo: '//placehold.it/200x40?text=Your+Logo',
       i18n: {
