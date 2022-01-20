@@ -10,7 +10,7 @@ class App {
     })
     document.getElementById('sign-out').addEventListener('click', (event) => {
       event.preventDefault()
-      this.signIn.session.close((err) => {
+      this.signIn.authClient.signOut(err => {
         if (err) {
           return alert(`Error: ${err}`)
         }
@@ -18,12 +18,11 @@ class App {
       })
     })
     this.signIn = new OktaSignIn({
-      baseUrl: 'https://{YOUR_OKTA_DOMAIN}',
-      clientId: '{YOUR_CLIENT_ID}',
-      redirectUri: 'http://localhost:8080',
+      baseUrl: 'https://{yourOktaDomain}',
+      clientId: '{clientId}',
+      redirectUri: window.location.origin,
       authParams: {
-        issuer: 'default',
-        responseType: ['id_token','token']
+        issuer: 'https://{yourOktaDomain}/oauth2/default',
       },
       logo: '//placehold.it/200x40?text=Your+Logo',
       i18n: {
@@ -34,12 +33,12 @@ class App {
     })
   }
   async init () {
-    this.signIn.session.get(async (res) => {
-      if (res.status === 'ACTIVE') {
-        this.showMeals()
-      } else {
-        this.showSignIn()
-      }
+    this.signIn.authClient.token.getUserInfo()
+    .then(user => {
+      this.showMeals()
+    })
+    .catch(() => {
+      this.showSignIn()
     })
   }
   async showMeals () {
@@ -52,12 +51,11 @@ class App {
   showSignIn () {
     document.getElementById('sign-out').style.display = 'none'
     document.getElementById('meals-container').style.display = 'none'
-    this.signIn.renderEl({ el: '#widget-container' }, (res) => {
-      if (res.status === 'SUCCESS') {
-        this.signIn.tokenManager.add('id_token', res[0])
-        this.signIn.tokenManager.add('access_token', res[1])
-        this.showMeals()
-      }
+    this.signIn.showSignInToGetTokens({
+      el: '#widget-container'
+    }).then(tokens => {
+      this.signIn.authClient.tokenManager.setTokens(tokens)
+      this.showMeals()
     })
   }
   request (method, url, data = null) {
@@ -65,9 +63,9 @@ class App {
       let xhr = new XMLHttpRequest()
       xhr.open(method, url, true)
       xhr.setRequestHeader('Content-Type', 'application/json')
-      const accessToken = this.signIn.tokenManager.get('access_token')
+      const accessToken = this.signIn.authClient.getAccessToken()
       if (accessToken) {
-        xhr.setRequestHeader('Authorization', `Bearer ${accessToken.accessToken}`)
+        xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`)
       }
       xhr.onload = () => {
         if (xhr.status === 200) {

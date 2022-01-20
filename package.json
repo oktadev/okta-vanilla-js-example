@@ -10,8 +10,8 @@
   "author": "Brandon Parise <brandon@modernup.io>",
   "license": "ISC",
   "dependencies": {
-    "@okta/jwt-verifier": "0.0.12",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "@okta/jwt-verifier": "^2.3.0",
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2"
   }
 }
